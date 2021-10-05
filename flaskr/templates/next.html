@@ -1,0 +1,25 @@
+#This is an example of Jinja 
+
+#The extends will tell you what html file to use as a template
+{% extends "index.html" %}
+
+#This block content is saying hey from here is what I wangt you to put into the template
+{% block content %}
+<h3> This is the start of my child template</h3>
+<br>
+
+#This is showing an example of getting a variable from the python function that rendered this html file
+<p>My string: {{my_string}}</p>
+
+#This shows that you can call specific items from a list like in python as long as you enclose it in the {{}}
+<p>Value from the list: {{my_list[3]}}</p>
+
+#you can also do for loops. They are just enclosed in {% %} and you have to end them
+<p>Loop through the list:</p>
+<ul>
+	{% for i in my_list %}
+	<li>{{i}}</li>
+	{% endfor %}
+</ul>
+<h3> This is the end of my child template</h3>
+{% endblock %}

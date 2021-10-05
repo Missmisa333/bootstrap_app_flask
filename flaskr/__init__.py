@@ -1,7 +1,9 @@
 import os
 
-from flask import Flask
+#you need to import not just FLASK but also session and flask_session
+from flask import Flask,session
 from flask import render_template
+from flask_session import Session
 
 #Making the app
 ######################################################################
@@ -14,6 +16,10 @@ def create_app(test_config=None):
         # store the database in the instance folder
         DATABASE=os.path.join(app.instance_path, "flaskr.sqlite"),
     )
+    #configure a session and session type
+    Session(app)
+    app.config['SESSION_TYPE'] = 'filesystem'
+
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -29,18 +35,28 @@ def create_app(test_config=None):
         pass
 
 ######################################################################
+
+
 #Home page
     @app.route("/")
     def index():
+
         return render_template("index.html")
 
 
 #Page Second
     @app.route("/next_page")
-    def next_page():
-        return render_template("next.html")
+    def template_test():
+        return render_template('next.html', my_string="Wheeeee!", my_list=[0,1,2,3,4,5])
 
 
+
+    #def next_page():
+    #    return render_template("next.html")
+
+    #Needed to start the session that stores the data 
+    sess = Session()
+    sess.init_app(app)
     
 #Making the app run
     return app
